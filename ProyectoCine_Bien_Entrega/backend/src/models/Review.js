@@ -23,7 +23,6 @@ const reviewSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Crear un índice normal (no único) para mejorar el rendimiento de las búsquedas
 reviewSchema.index({ user: 1, movie: 1 });
 
 const Review = mongoose.model('Review', reviewSchema);

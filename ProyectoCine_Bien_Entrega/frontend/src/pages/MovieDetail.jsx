@@ -85,11 +85,11 @@ const MovieDetail = () => {
 
   const getTrailerKey = (videos) => {
     if (!videos || !videos.results) return null;
-    // Buscar primero un trailer oficial
+
     const trailer = videos.results.find(
       video => video.type === "Trailer" && video.site === "YouTube"
     );
-    // Si no hay trailer, usar el primer video disponible
+
     return trailer ? trailer.key : videos.results[0]?.key;
   };
 

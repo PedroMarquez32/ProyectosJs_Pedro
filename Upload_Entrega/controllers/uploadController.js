@@ -1,24 +1,21 @@
-// controllers/uploadController.js
 import fs from "fs";
 import multer from "multer";
 import path from "path";
 
-// Configuración de Multer: almacenamiento y nombres de archivo
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Carpeta donde se guardarán los archivos subidos
+    
     cb(null, path.join(process.cwd(), "uploads"));
   },
   filename: (req, file, cb) => {
-    // Guardamos el archivo con un nombre único basado en la fecha y el nombre original
-    // cb(null, `${Date.now()}-${file.originalname}`);
     cb(null, file.originalname);
   },
 });
 
 const upload = multer({ storage });
 
-// Función auxiliar para obtener el tamaño del directorio
+
 const getDirSize = (dirPath) => {
   let size = 0;
   const files = fs.readdirSync(dirPath);
@@ -30,7 +27,7 @@ const getDirSize = (dirPath) => {
   return size;
 };
 
-// Todas las funciones del controlador
+
 const uploadFile = (req, res) => {
   try {
     if (!req.file) {
@@ -65,17 +62,15 @@ const deleteFile = (req, res) => {
   const destPath = path.join(process.cwd(), "recycle", fileName);
 
   try {
-    // Verificar si el archivo existe
     if (!fs.existsSync(sourcePath)) {
       return res.status(404).send(`Archivo no encontrado: ${fileName}`);
     }
 
-    // Si el archivo ya existe en la papelera, eliminarlo primero
     if (fs.existsSync(destPath)) {
       fs.unlinkSync(destPath);
     }
 
-    // Mover el archivo
+    
     fs.copyFileSync(sourcePath, destPath);
     fs.unlinkSync(sourcePath);
 
@@ -107,17 +102,14 @@ const restoreFile = (req, res) => {
   const destPath = path.join(process.cwd(), "uploads", fileName);
 
   try {
-    // Verificar si el archivo existe en la papelera
     if (!fs.existsSync(sourcePath)) {
       return res.status(404).send(`Archivo no encontrado en papelera: ${fileName}`);
     }
 
-    // Si el archivo ya existe en uploads, eliminarlo primero
     if (fs.existsSync(destPath)) {
       fs.unlinkSync(destPath);
     }
 
-    // Mover el archivo usando copy y unlink en lugar de rename
     fs.copyFileSync(sourcePath, destPath);
     fs.unlinkSync(sourcePath);
 
@@ -192,7 +184,6 @@ const deleteFromRecycle = (req, res) => {
   }
 };
 
-// Una única exportación al final
 export {
   upload,
   uploadFile,

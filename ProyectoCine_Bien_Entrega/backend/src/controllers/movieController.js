@@ -9,7 +9,6 @@ exports.getPopularMovies = async (req, res) => {
     );
     const data = await response.json();
 
-    // Guardamos o actualizamos las películas en nuestra BD
     const movies = await Promise.all(
       data.results.map(async (movie) => {
         const movieData = {
@@ -44,19 +43,16 @@ exports.getMovieDetails = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Obtener detalles básicos de la película
     const movieResponse = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API_KEY}&language=es-ES`
     );
     const movieData = await movieResponse.json();
 
-    // Obtener videos (trailers)
     const videosResponse = await fetch(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.TMDB_API_KEY}&language=es-ES`
     );
     const videosData = await videosResponse.json();
 
-    // Guardar o actualizar la película en nuestra base de datos
     await Movie.findOneAndUpdate(
       { tmdbId: parseInt(id) },
       {
@@ -71,7 +67,6 @@ exports.getMovieDetails = async (req, res) => {
       { upsert: true, new: true }
     );
 
-    // Combinar los datos
     const movie = {
       ...movieData,
       videos: videosData
@@ -121,12 +116,10 @@ exports.searchMovies = async (req, res) => {
 
     const data = await response.json();
     
-    // Asegurarse de que la respuesta tenga el formato correcto
     if (!data.results) {
       throw new Error('Formato de respuesta inválido de TMDB');
     }
 
-    // Transformar los resultados para asegurar la estructura correcta
     const formattedResults = data.results.map(movie => ({
       id: movie.id,
       title: movie.title,

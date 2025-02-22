@@ -12,22 +12,22 @@ const movieRoutes = require('./routes/movieRoutes');
 
 const app = express();
 
-// Middleware
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173', // URL de tu frontend
+  origin: 'http://localhost:5173', 
   credentials: true
 }));
 
-// Rutas
+
 app.use('/api', routes);
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/movies', movieRoutes);
 
-// Conectar a MongoDB (solo una vez)
+
 connectDB();
 
 const PORT = process.env.PORT || 3000;

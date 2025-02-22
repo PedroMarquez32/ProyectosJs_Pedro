@@ -1,6 +1,5 @@
 const API_URL = 'http://localhost:3000/api';
 
-// Función auxiliar para hacer peticiones
 const fetchWithCredentials = async (endpoint, options = {}) => {
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
@@ -19,7 +18,7 @@ const fetchWithCredentials = async (endpoint, options = {}) => {
   return response.json();
 };
 
-// Servicios de autenticación
+
 export const authService = {
   register: (userData) => 
     fetchWithCredentials('/auth/register', {
@@ -42,7 +41,7 @@ export const authService = {
     fetchWithCredentials('/users/me'),
 };
 
-// Servicios de películas
+
 export const movieService = {
   getPopularMovies: (page = 1) =>
     fetchWithCredentials(`/movies/popular?page=${page}`),
@@ -104,7 +103,7 @@ const api = {
       const response = await fetch(`${import.meta.env.VITE_API_URL}${endpoint}`, config);
       
       if (!response.ok) {
-        // Si el token expiró o es inválido
+
         if (response.status === 401) {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -121,7 +120,7 @@ const api = {
     }
   },
 
-  // Métodos específicos
+
   get: (endpoint) => api.request(endpoint),
   
   post: (endpoint, data) => api.request(endpoint, {

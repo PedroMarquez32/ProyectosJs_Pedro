@@ -1,4 +1,3 @@
-// routes/uploadRoutes.js
 import { Router } from "express";
 import {
   upload,
@@ -14,19 +13,18 @@ import {
 
 const router = Router();
 
-// Rutas de la papelera
+
 router.get("/recycle", listRecycledFiles);
 router.delete("/empty-recycle", emptyRecycleBin); 
 router.delete("/recycle/:fileName", deleteFromRecycle);
 router.post("/restore/:fileName", restoreFile);
 
-// Rutas generales
 router.get("/space-usage", getSpaceUsage);
 router.post("/", upload.single("file"), uploadFile);
 router.get("/", listFiles);
 router.delete("/:fileName", deleteFile);
 
-// Ruta para suscripción de correo
+
 router.post("/subscribe", async (req, res) => {
   try {
     const { email } = req.body;

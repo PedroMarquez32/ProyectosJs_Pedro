@@ -17,16 +17,16 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             { path: ROUTES.HOME, element: <Home /> },
-            //search
+            
             { path: ROUTES.SEARCH, element: <SearchPage /> },
-            //favorites
+            
             { path: ROUTES.FAVORITES, element: <Favorites /> },
-            //about
+            
             { path: ROUTES.ABOUT, element: <About /> },
-            //pokemon detail
+            
             { path: ROUTES.POKEMON_DETAIL, element: <PokemonDetail />,
                 errorElement: <ErrorPage />,
-                // loader: pokemonDetailLoader,
+                
              },
         ],
     },

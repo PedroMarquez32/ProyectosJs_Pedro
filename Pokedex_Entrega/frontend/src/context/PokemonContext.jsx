@@ -8,7 +8,6 @@ export const PokemonProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [currentGeneration, setCurrentGeneration] = useState(1)
 
-  // Cargar favoritos del backend al iniciar
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -24,7 +23,6 @@ export const PokemonProvider = ({ children }) => {
     fetchFavorites()
   }, [])
 
-  // Cargar todos los pokemon del backend
   const getAllPokemons = async (start, end) => {
     try {
       setLoading(true)
@@ -62,7 +60,6 @@ export const PokemonProvider = ({ children }) => {
     }
   }
 
-  // Efecto para cargar pokémons cuando cambia la generación
   useEffect(() => {
     const loadPokemonsByGeneration = () => {
       const ranges = {

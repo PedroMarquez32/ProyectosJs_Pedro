@@ -17,7 +17,7 @@ const Login = () => {
     
     try {
       await login(credentials);
-      navigate('/'); // Redirigir al home después del login exitoso
+      navigate('/'); 
     } catch (err) {
       setError(err.message);
     }

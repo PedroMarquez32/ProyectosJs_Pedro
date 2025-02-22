@@ -33,7 +33,6 @@ const Home = () => {
         <div className='container mx-auto px-4 py-8'>
             <h1 className='text-4xl font-bold mb-6 text-center text-white'>Pokémon por Generación</h1>
             
-            {/* Botones de generación */}
             <div className='flex flex-wrap justify-center gap-2 mb-8'>
                 {GENERATIONS.map((gen) => (
                     <button

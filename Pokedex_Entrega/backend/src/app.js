@@ -8,7 +8,6 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials: true
@@ -17,15 +16,12 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Ruta de prueba
 app.get('/', (req, res) => {
   res.json({ message: 'Pokemon API is running' });
 });
 
-// Rutas de la API
 app.use('/api', pokemonRoutes);
 
-// Manejo de errores global
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({ 
@@ -34,7 +30,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Iniciar servidor solo después de conectar a MongoDB
+
 const startServer = async () => {
   try {
     await connectDB();
@@ -51,7 +47,6 @@ const startServer = async () => {
 
 startServer();
 
-// Manejo de errores no capturados
 process.on('unhandledRejection', (err) => {
   console.error('Unhandled Rejection:', err);
 });

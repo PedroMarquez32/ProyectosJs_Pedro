@@ -66,7 +66,6 @@ exports.addReview = async (req, res) => {
     const { movieId, rating, comment } = req.body;
     const userId = req.user.id;
 
-    // Buscar o crear la película
     let movie = await Movie.findOne({ tmdbId: movieId });
     if (!movie) {
       try {
@@ -90,7 +89,6 @@ exports.addReview = async (req, res) => {
       }
     }
 
-    // Crear la nueva reseña
     const review = new Review({
       user: userId,
       movie: movie._id,
@@ -100,13 +98,11 @@ exports.addReview = async (req, res) => {
 
     await review.save();
 
-    // Añadir la reseña a la película si no existe ya
     if (!movie.reviews.includes(review._id)) {
       movie.reviews.push(review._id);
       await movie.save();
     }
 
-    // Poblar los datos del usuario para la respuesta
     await review.populate('user', 'username');
     
     res.status(201).json(review);
@@ -146,12 +142,10 @@ exports.deleteReview = async (req, res) => {
       return res.status(404).json({ message: 'Reseña no encontrada' });
     }
 
-    // Eliminar la referencia de la reseña en la película
     await Movie.findByIdAndUpdate(review.movie, {
       $pull: { reviews: review._id }
     });
 
-    // Eliminar la reseña
     await review.deleteOne();
 
     res.json({ message: 'Reseña eliminada correctamente' });

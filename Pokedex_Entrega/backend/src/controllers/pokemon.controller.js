@@ -55,12 +55,10 @@ export const getAllPokemons = async (req, res) => {
     
     console.log('Petición recibida para pokemons:', { start: startNum, end: endNum });
     
-    // Primero, eliminar los Pokémon existentes en ese rango
     await Pokemon.deleteMany({
       id: { $gte: startNum, $lte: endNum }
     });
 
-    // Obtener todos los Pokémon nuevamente
     const fetchPromises = [];
     for (let i = startNum; i <= endNum; i++) {
       fetchPromises.push(

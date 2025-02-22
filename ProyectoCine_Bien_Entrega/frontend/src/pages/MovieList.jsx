@@ -13,7 +13,7 @@ const MovieList = () => {
   const [genres, setGenres] = useState([]);
   const [ratingRange, setRatingRange] = useState(0);
 
-  // Cargar películas cuando cambie la página o categoría
+
   useEffect(() => {
     const loadMovies = async () => {
       try {
@@ -22,7 +22,7 @@ const MovieList = () => {
         
         let filteredMovies = data.results;
         
-        // Aplicar filtros si es necesario
+
         if (ratingRange > 0) {
           filteredMovies = filteredMovies.filter(movie => 
             movie.vote_average >= ratingRange
@@ -46,7 +46,7 @@ const MovieList = () => {
     loadMovies();
   }, [page, selectedCategory, selectedGenre, ratingRange]);
 
-  // Cargar géneros
+
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -64,7 +64,7 @@ const MovieList = () => {
     setPage(newPage);
   };
 
-  // Resto del código del componente (filtros, UI, etc.)
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -72,7 +72,7 @@ const MovieList = () => {
           Películas Populares
         </h1>
 
-        {/* Filtros */}
+
         <div className="mb-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
@@ -123,7 +123,7 @@ const MovieList = () => {
             </div>
           </div>
 
-          {/* Slider de valoración mejorado */}
+
           <div className="rating-slider-container">
             <div className="rating-header">
               <span>Valoración: {ratingRange.toFixed(1)}</span>
@@ -167,19 +167,19 @@ const MovieList = () => {
           </div>
         </div>
 
-        {/* Contador de resultados */}
+
         <div className="text-white mb-4 text-center">
           Mostrando {movies.length} de {movies.length} películas
         </div>
 
-        {/* Lista de películas */}
+
         <motion.div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </motion.div>
 
-        {/* Paginación */}
+
         <div className="flex justify-center gap-4 mt-8 mb-8">
           <button
             onClick={() => handlePageChange(page - 1)}

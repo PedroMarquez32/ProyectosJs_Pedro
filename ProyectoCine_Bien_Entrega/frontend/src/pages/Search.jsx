@@ -55,21 +55,21 @@ const Search = () => {
           </div>
         </form>
 
-        {/* Estado de carga */}
+
         {loading && (
           <div className="text-center text-white text-xl">
             Buscando películas...
           </div>
         )}
 
-        {/* Mensaje de error */}
+
         {error && (
           <div className="text-center text-red-500 mb-8">
             {error}
           </div>
         )}
 
-        {/* Resultados */}
+
         {!loading && !error && movies.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {movies.map((movie) => (
@@ -78,7 +78,6 @@ const Search = () => {
           </div>
         )}
 
-        {/* Mensaje cuando no hay resultados */}
         {!loading && !error && searchTerm && movies.length === 0 && (
           <div className="text-center text-gray-400 text-xl">
             No se encontraron películas que coincidan con tu búsqueda.

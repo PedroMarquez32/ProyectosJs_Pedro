@@ -14,7 +14,6 @@ const Favorites = () => {
       try {
         setLoading(true);
         const userFavorites = await movieService.getUserFavorites();
-        // Transformar los datos para que coincidan con el formato esperado por MovieCard
         const formattedFavorites = userFavorites.map(movie => ({
           id: movie.tmdbId,
           title: movie.title,
@@ -41,7 +40,6 @@ const Favorites = () => {
   const handleToggleFavorite = async (movieId) => {
     try {
       await movieService.toggleFavorite(movieId);
-      // Actualizar el estado local después de quitar de favoritos
       setFavorites(prev => prev.filter(movie => movie.id !== movieId));
     } catch (err) {
       console.error('Error toggling favorite:', err);

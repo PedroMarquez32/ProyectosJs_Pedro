@@ -7,7 +7,6 @@ mongoose.connect('mongodb://localhost:27017/pokemon_db', {
 .then(async () => {
     console.log('Conexión exitosa a MongoDB');
     
-    // Crear la colección si no existe
     if (!mongoose.connection.collections['pokemons']) {
         await mongoose.connection.createCollection('pokemons');
         console.log('Colección pokemons creada');

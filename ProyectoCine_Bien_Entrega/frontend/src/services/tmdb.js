@@ -2,15 +2,13 @@ const VITE_API_TOKEN = import.meta.env.VITE_API_TOKEN;
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 const VITE_BASE_IMAGE_URL = import.meta.env.VITE_BASE_IMAGE_URL;
 
-// objeto que me permite decidir el tamaño de las imágenes
+
 export const IMAGES_SIZES = {
   POSTER: "w500",
   BACKDROP: "original",
 };
 
-// ------------- FUNCIONES QUE VOY A CREAR PARA LA API -------------
-// función para obtener la url de una imagen
-// le paso un path : /sssss
+
 export const getImageUrl = (path, size = IMAGES_SIZES.POSTER) => {
   if (!path) return "/placeholder-movie.jpg";
   return `${VITE_BASE_IMAGE_URL}/${size}${path}`;
@@ -30,7 +28,7 @@ const fetchFromAPI = async (endpoint, params = {}) => {
   return response.json();
 };
 
-// Obtener películas según la categoría
+
 export const getMoviesByCategory = async (category, page = 1) => {
   const endpoints = {
     popular: '/movie/popular',
@@ -41,17 +39,17 @@ export const getMoviesByCategory = async (category, page = 1) => {
   return fetchFromAPI(endpoints[category], { page });
 };
 
-// Obtener géneros de películas
+
 export const getMovieGenres = async () => {
   return fetchFromAPI('/genre/movie/list');
 };
 
-// Mantener la función original por compatibilidad
+
 export const getPopularMovies = (page = 1) => {
   return getMoviesByCategory('popular', page);
 };
 
-// detalles de las películas
+
 
 export const getMovieDetails = async (movieId) => {
   try {
@@ -77,7 +75,7 @@ export const getMovieDetails = async (movieId) => {
   }
 };
 
-// búsqueda de una película por un query de busqueda
+
 
 export const searchMovies = async (query, page = 1) => {
   return fetchFromAPI("/search/movie", { query, page });
@@ -96,7 +94,7 @@ export const getMovieVideos = async (movieId) => {
     );
     const data = await response.json();
     
-    // Filtrar para obtener solo trailers oficiales
+    
     const videos = data.results.filter(video => {
       return (
         (video.type === 'Trailer' || video.type === 'Teaser') &&
@@ -104,7 +102,7 @@ export const getMovieVideos = async (movieId) => {
       );
     });
 
-    // Priorizar trailers en español, luego en inglés
+    
     const spanishTrailer = videos.find(video => video.iso_639_1 === 'es');
     const englishTrailer = videos.find(video => video.iso_639_1 === 'en');
     

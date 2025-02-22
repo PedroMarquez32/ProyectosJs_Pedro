@@ -9,16 +9,13 @@ export const connectDB = async () => {
     
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     
-    // Crear índices si no existen
     if (mongoose.models.Pokemon) {
       const Pokemon = mongoose.model('Pokemon');
       try {
-        // Primero verificamos si los índices existen
         const existingIndexes = await Pokemon.collection.listIndexes().toArray();
         const hasIdIndex = existingIndexes.some(index => index.name === 'id_1');
         const hasNameIndex = existingIndexes.some(index => index.name === 'name_1');
 
-        // Si no existen, los creamos
         if (!hasIdIndex) {
           await Pokemon.collection.createIndex({ id: 1 }, { unique: true });
           console.log('Índice de ID creado');
@@ -31,7 +28,6 @@ export const connectDB = async () => {
         console.log('Índices verificados correctamente');
       } catch (indexError) {
         console.warn('Advertencia al manejar índices:', indexError);
-        // Continuamos aunque haya error con los índices
       }
     }
     
@@ -42,7 +38,6 @@ export const connectDB = async () => {
   }
 };
 
-// Manejadores de eventos de conexión
 mongoose.connection.on('error', err => {
   console.error('MongoDB connection error:', err);
 });

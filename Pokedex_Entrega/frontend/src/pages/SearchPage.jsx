@@ -17,15 +17,12 @@ const SearchPage = () => {
     setError(null)
     
     try {
-      // Primero intentamos buscar por nombre exacto
       const response = await fetch(`${import.meta.env.VITE_API_URL}/pokemon/${searchTerm.toLowerCase()}`)
       const data = await response.json()
       
       if (response.ok) {
-        // Si encontramos el pokémon exacto, navegamos a su página de detalle
         navigate(`/pokemon/${data.name.toLowerCase()}`)
       } else {
-        // Si no encontramos el pokémon exacto, realizamos una búsqueda parcial
         const searchResponse = await fetch(`${import.meta.env.VITE_API_URL}/pokemon/search/${searchTerm}`)
         if (!searchResponse.ok) {
           throw new Error('Error en la búsqueda')

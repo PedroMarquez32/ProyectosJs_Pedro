@@ -27,8 +27,8 @@ const MovieCard = ({ movie }) => {
   }, [user, movie.id]);
 
   const handleToggleFavorite = async (e) => {
-    e.preventDefault(); // Prevenir la navegación
-    e.stopPropagation(); // Prevenir la propagación del evento
+    e.preventDefault(); 
+    e.stopPropagation(); 
     
     if (!user) return;
 
@@ -50,7 +50,6 @@ const MovieCard = ({ movie }) => {
     >
       <Link to={`/movie/${movie.id}`} className="block">
         <div className="relative overflow-hidden rounded-lg shadow-lg bg-[var(--card-bg)]">
-          {/* Botón de favoritos */}
           {user && (
             <button
               onClick={handleToggleFavorite}
@@ -64,7 +63,6 @@ const MovieCard = ({ movie }) => {
             </button>
           )}
 
-          {/* Imagen del poster */}
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
@@ -74,7 +72,6 @@ const MovieCard = ({ movie }) => {
             }}
           />
 
-          {/* Overlay con información */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent 
                           opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="absolute bottom-0 left-0 right-0 p-4">

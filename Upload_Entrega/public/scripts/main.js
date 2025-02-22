@@ -1,11 +1,11 @@
-// Elementos del DOM
+
 const uploadForm = document.getElementById("uploadForm");
 const fileList = document.getElementById("fileList");
 const recycleList = document.getElementById("recycleList");
 const emptyRecycleBtn = document.getElementById("emptyRecycle");
 let spaceChart;
 
-// Inicializar gráfico
+
 function initChart() {
   const ctx = document.getElementById('spaceChart').getContext('2d');
   spaceChart = new Chart(ctx, {
@@ -15,8 +15,8 @@ function initChart() {
       datasets: [{
         data: [0, 0],
         backgroundColor: [
-          'rgba(59, 130, 246, 0.8)', // Azul
-          'rgba(239, 68, 68, 0.8)'   // Rojo
+          'rgba(59, 130, 246, 0.8)', 
+          'rgba(239, 68, 68, 0.8)'   
         ],
         borderColor: [
           'rgba(59, 130, 246, 1)',
@@ -69,20 +69,20 @@ function initChart() {
   });
 }
 
-// Actualizar datos de espacio con animación suave
+
 async function updateSpaceUsage() {
   const response = await fetch("/uploads/space-usage");
   if (response.ok) {
     const data = await response.json();
     const totalSpace = (data.uploads + data.recycle) / (1024 * 1024);
     
-    // Actualizar datos con animación
+   
     spaceChart.data.datasets[0].data = [
       data.uploads / (1024 * 1024),
       data.recycle / (1024 * 1024)
     ];
     
-    // Añadir información del total
+    
     spaceChart.options.plugins.title.text = 
       `Uso de Espacio (Total: ${totalSpace.toFixed(2)} MB)`;
     
@@ -90,7 +90,7 @@ async function updateSpaceUsage() {
   }
 }
 
-// Listar archivos activos
+
 async function fetchFiles() {
   const response = await fetch("/uploads");
   if (!response.ok) return;
@@ -119,7 +119,7 @@ async function fetchFiles() {
     fileList.appendChild(li);
   });
 
-  // Eventos de eliminación
+  
   document.querySelectorAll("#fileList button[data-filename]").forEach(button => {
     button.addEventListener("click", async (e) => {
       const fileName = e.target.dataset.filename;
@@ -131,7 +131,7 @@ async function fetchFiles() {
   });
 }
 
-// Listar archivos en papelera
+
 async function fetchRecycledFiles() {
   const response = await fetch("/uploads/recycle");
   if (!response.ok) return;
@@ -162,7 +162,7 @@ async function fetchRecycledFiles() {
     recycleList.appendChild(li);
   });
 
-  // Eventos de restauración
+  
   recycleList.querySelectorAll(".restore-btn").forEach(button => {
     button.addEventListener("click", async (e) => {
       const fileName = e.target.dataset.filename;
@@ -173,7 +173,7 @@ async function fetchRecycledFiles() {
     });
   });
 
-  // Eventos de eliminación permanente
+  
   recycleList.querySelectorAll(".delete-btn").forEach(button => {
     button.addEventListener("click", async (e) => {
       if (confirm('¿Estás seguro de que quieres eliminar permanentemente este archivo?')) {
@@ -186,7 +186,7 @@ async function fetchRecycledFiles() {
   });
 }
 
-// Funciones de API
+
 async function deleteFile(fileName) {
   const response = await fetch(`/uploads/${fileName}`, {
     method: "DELETE"
@@ -218,7 +218,7 @@ async function emptyRecycleBin() {
     const result = await response.text();
     console.log(result);
     
-    // Actualizar la interfaz
+    
     await fetchRecycledFiles();
     await updateSpaceUsage();
   } catch (error) {
@@ -227,7 +227,7 @@ async function emptyRecycleBin() {
   }
 }
 
-// Función actualizada para usar la ruta correcta
+
 async function deleteFromRecycle(fileName) {
   try {
     console.log('Intentando eliminar:', fileName);
@@ -246,7 +246,7 @@ async function deleteFromRecycle(fileName) {
       throw new Error(`Error del servidor: ${errorText}`);
     }
     
-    // Actualizar la interfaz
+    
     await fetchRecycledFiles();
     await updateSpaceUsage();
   } catch (error) {
@@ -255,7 +255,7 @@ async function deleteFromRecycle(fileName) {
   }
 }
 
-// Event Listeners
+
 uploadForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(uploadForm);
@@ -278,7 +278,7 @@ emptyRecycleBtn.addEventListener("click", async () => {
   }
 });
 
-// Modifica el manejador del formulario de email
+
 document.getElementById('emailForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -315,7 +315,7 @@ document.getElementById('emailForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Inicialización
+
 document.addEventListener("DOMContentLoaded", () => {
   initChart();
   fetchFiles();

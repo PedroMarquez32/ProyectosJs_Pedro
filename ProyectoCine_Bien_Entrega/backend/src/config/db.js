@@ -8,7 +8,6 @@ const connectDB = async () => {
     });
     console.log('MongoDB conectado correctamente');
 
-    // Crear índices aquí si es necesario
     const Review = require('../models/Review');
     await Review.collection.createIndex({ user: 1, movie: 1 });
     console.log('Índices creados correctamente');

@@ -7,9 +7,9 @@ import { getPopularMovies } from "../services/tmdb";
 import { motion } from "framer-motion";
 
 const Home = () => {
-  // estado para el número de página
+
   const [page, setPage] = useState(1);
-  // me traigo la data de las películas
+
   const { data, loading, error } = useFetch(
     () => getPopularMovies(page),
     [page]
@@ -20,7 +20,7 @@ const Home = () => {
     setPage(newPage);
   };
 
-  // si hay error cargando??
+
   if (error) {
     return (
       <div className="text-center p-10">

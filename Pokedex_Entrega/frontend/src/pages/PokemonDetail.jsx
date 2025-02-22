@@ -58,7 +58,6 @@ const PokemonDetail = () => {
     )
   }
 
-  // Obtener la imagen con fallback
   const getPokemonImage = () => {
     if (pokemon.sprites?.other?.['official-artwork']?.front_default) {
       return pokemon.sprites.other['official-artwork'].front_default;
