@@ -1,3 +1,35 @@
+/* Al inicio del archivo */
+:root {
+  /* Modo claro por defecto */
+  --bg-primary: #f3f4f6;    /* fondo principal */
+  --bg-secondary: #ffffff;  /* fondo secundario/cards */
+  --text-primary: #1f2937;  /* texto principal */
+  --text-secondary: #4b5563; /* texto secundario */
+  --nav-bg: #0284c7;       /* fondo de navegación */
+  --card-bg: #f9fafb;      /* fondo de tarjetas */
+  --border-color: #e5e7eb; /* color de bordes */
+  --input-bg: #f9fafb;     /* fondo de inputs */
+  --button-hover: #0369a1; /* hover de botones */
+}
+
+/* Modo oscuro */
+.dark {
+  --bg-primary: #111827;    /* fondo principal */
+  --bg-secondary: #1f2937;  /* fondo secundario/cards */
+  --text-primary: #f9fafb;  /* texto principal */
+  --text-secondary: #d1d5db; /* texto secundario */
+  --nav-bg: #0c4a6e;        /* fondo de navegación */
+  --card-bg: #1f2937;       /* fondo de tarjetas */
+  --border-color: #374151;  /* color de bordes */
+  --input-bg: #374151;      /* fondo de inputs */
+  --button-hover: #075985;  /* hover de botones */
+}
+
+/* Aplicar transición suave al cambiar de tema */
+* {
+  transition: background-color 0.3s, color 0.3s;
+}
+
 /* Estilos para el slider de valoración */
 .rating-slider-container {
   background: rgba(30, 41, 59, 0.5);

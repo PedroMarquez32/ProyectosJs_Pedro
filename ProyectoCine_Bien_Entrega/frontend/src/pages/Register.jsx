@@ -32,9 +32,11 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-96">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">Registro</h2>
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+      <div className="bg-[var(--bg-secondary)] p-8 rounded-lg shadow-xl w-96">
+        <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6 text-center">
+          Registro
+        </h2>
         
         {error && (
           <div className="bg-red-500 text-white p-3 rounded mb-4 text-sm">
@@ -44,7 +46,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="username">
+            <label className="block text-[var(--text-secondary)] mb-2" htmlFor="username">
               Nombre de usuario
             </label>
             <input
@@ -52,13 +54,14 @@ const Register = () => {
               id="username"
               value={formData.username}
               onChange={(e) => setFormData({...formData, username: e.target.value})}
-              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+              className="w-full p-2 rounded bg-[var(--input-bg)] text-[var(--text-primary)] 
+                       border border-[var(--border-color)] focus:border-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="email">
+            <label className="block text-[var(--text-secondary)] mb-2" htmlFor="email">
               Email
             </label>
             <input
@@ -66,13 +69,14 @@ const Register = () => {
               id="email"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+              className="w-full p-2 rounded bg-[var(--input-bg)] text-[var(--text-primary)] 
+                       border border-[var(--border-color)] focus:border-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="password">
+            <label className="block text-[var(--text-secondary)] mb-2" htmlFor="password">
               Contraseña
             </label>
             <input
@@ -80,13 +84,14 @@ const Register = () => {
               id="password"
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
-              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+              className="w-full p-2 rounded bg-[var(--input-bg)] text-[var(--text-primary)] 
+                       border border-[var(--border-color)] focus:border-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-300 mb-2" htmlFor="confirmPassword">
+            <label className="block text-[var(--text-secondary)] mb-2" htmlFor="confirmPassword">
               Confirmar Contraseña
             </label>
             <input
@@ -94,14 +99,16 @@ const Register = () => {
               id="confirmPassword"
               value={formData.confirmPassword}
               onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-              className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:border-blue-500 focus:outline-none"
+              className="w-full p-2 rounded bg-[var(--input-bg)] text-[var(--text-primary)] 
+                       border border-[var(--border-color)] focus:border-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-colors"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg 
+                     hover:bg-[var(--button-hover)] transition-colors"
           >
             Registrarse
           </button>

@@ -58,74 +58,58 @@ const Reviews = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
+    <div className="min-h-screen bg-[var(--bg-primary)] p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
           Mis Reseñas
         </h1>
 
         {reviews.length === 0 ? (
-          <div className="bg-gray-800 rounded-lg p-8 text-center">
-            <p className="text-gray-300">No has escrito ninguna reseña aún.</p>
+          <div className="bg-[var(--bg-secondary)] rounded-lg p-8 text-center shadow-lg">
+            <p className="text-[var(--text-secondary)]">No has escrito ninguna reseña aún.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {reviews.map((review) => (
-              <motion.div
-                key={review._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-800 rounded-lg overflow-hidden shadow-lg"
+              <div 
+                key={review._id} 
+                className="flex gap-6 bg-[var(--bg-secondary)] rounded-lg overflow-hidden shadow-lg"
               >
-                <div className="flex">
-                  {/* Póster de la película */}
-                  <Link 
-                    to={`/movie/${review.movie.tmdbId}`}
-                    className="w-1/3 flex-shrink-0"
-                  >
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${review.movie.posterPath}`}
-                      alt={review.movie.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.src = '/placeholder-movie.jpg';
-                      }}
-                    />
-                  </Link>
-
-                  {/* Contenido de la reseña */}
-                  <div className="w-2/3 p-6 relative">
+                <img 
+                  src={`https://image.tmdb.org/t/p/w500${review.movie.posterPath}`} 
+                  alt={review.movie.title}
+                  className="w-48 h-auto object-cover"
+                />
+                <div className="flex-1 p-6">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+                        {review.movie.title}
+                      </h3>
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <span key={star} className={star <= review.rating ? "text-yellow-400" : "text-[var(--text-secondary)]"}>
+                              ⭐
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm text-[var(--text-secondary)]">
+                          • {new Date(review.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
                     <button
                       onClick={() => handleDeleteReview(review._id)}
-                      className="absolute top-4 right-4 text-gray-400 hover:text-red-500 
-                               transition-colors p-2"
+                      className="text-red-500 hover:text-red-700"
                       title="Eliminar reseña"
                     >
-                      <MdDelete className="w-5 h-5" />
+                      <MdDelete className="text-xl" />
                     </button>
-
-                    <Link 
-                      to={`/movie/${review.movie.tmdbId}`}
-                      className="text-xl font-bold text-white hover:text-blue-400 transition-colors block mb-2"
-                    >
-                      {review.movie.title}
-                    </Link>
-
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="flex text-yellow-400">
-                        {Array.from({ length: review.rating }).map((_, i) => (
-                          <span key={i}>⭐</span>
-                        ))}
-                      </div>
-                      <span className="text-gray-400 text-sm">
-                        {new Date(review.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-
-                    <p className="text-gray-300 line-clamp-4">{review.comment}</p>
                   </div>
+                  <p className="text-[var(--text-secondary)]">{review.comment}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

@@ -28,31 +28,29 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4">
+    <div className="min-h-screen bg-[var(--bg-primary)] py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
           Buscar Películas
         </h1>
 
-        {/* Formulario de búsqueda */}
         <form onSubmit={handleSearch} className="mb-8">
-          <div className="flex gap-4 max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto flex gap-4">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Buscar películas..."
-              className="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 
-                       border border-gray-700 focus:outline-none focus:border-blue-500"
+              className="flex-1 p-3 rounded-lg bg-[var(--bg-secondary)] text-[var(--text-primary)] 
+                       border border-[var(--border-color)] shadow-sm
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg 
-                       hover:bg-blue-700 transition-colors flex items-center gap-2"
-              disabled={loading}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 
+                       transition-colors duration-200 shadow-sm"
             >
-              <FaSearch />
-              {loading ? 'Buscando...' : 'Buscar'}
+              Buscar
             </button>
           </div>
         </form>

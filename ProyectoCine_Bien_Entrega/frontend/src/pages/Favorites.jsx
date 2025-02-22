@@ -51,19 +51,27 @@ const Favorites = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-2xl">Cargando favoritos...</div>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
+        <div className="max-w-7xl mx-auto px-4 py-8 w-full">
+          <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
+            Mis Películas Favoritas
+          </h1>
+
+          <div className="text-[var(--text-primary)] text-center">Cargando favoritos...</div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-red-500/10 border border-red-500 rounded-lg p-4">
-            <p className="text-red-500 text-center">{error}</p>
-          </div>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
+        <div className="max-w-7xl mx-auto px-4 py-8 w-full">
+          <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
+            Mis Películas Favoritas
+          </h1>
+
+          <div className="text-red-500 text-center">{error}</div>
         </div>
       </div>
     );
@@ -71,16 +79,14 @@ const Favorites = () => {
 
   if (!favorites || favorites.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-900 p-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Mis Favoritos</h2>
-          <div className="bg-gray-800 rounded-lg p-8">
-            <p className="text-gray-300 text-lg">
-              No tienes películas favoritas aún.
-            </p>
-            <p className="text-gray-400 mt-2">
-              ¡Explora nuestro catálogo y añade algunas!
-            </p>
+      <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
+        <div className="max-w-7xl mx-auto px-4 py-8 w-full">
+          <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
+            Mis Películas Favoritas
+          </h1>
+
+          <div className="text-[var(--text-secondary)] text-center">
+            No tienes películas favoritas aún
           </div>
         </div>
       </div>
@@ -88,13 +94,13 @@ const Favorites = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-white mb-8 text-center">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 py-8 w-full">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
           Mis Películas Favoritas
-        </h2>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        </h1>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {favorites.map((movie) => (
             <MovieCard
               key={movie.id}

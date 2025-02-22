@@ -66,39 +66,61 @@ const MovieList = () => {
 
   // Resto del código del componente (filtros, UI, etc.)
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--bg-primary)] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
+        <h1 className="text-4xl font-bold text-[var(--text-primary)] mb-8 text-center">
           Películas Populares
         </h1>
 
         {/* Filtros */}
         <div className="mb-8 space-y-6">
-          {/* Selector de categoría */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-gray-800 text-white rounded-lg p-2 border border-gray-700"
-            >
-              <option value="popular">Más Populares</option>
-              <option value="top_rated">Mejor Valoradas</option>
-              <option value="now_playing">Más Recientes</option>
-            </select>
+            <div className="relative">
+              <label className="block text-[var(--text-secondary)] mb-2">
+                Categoría
+              </label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full p-3 rounded-lg bg-[var(--input-bg)] text-[var(--text-primary)]
+                         border border-[var(--border-color)] focus:border-blue-500 focus:outline-none
+                         appearance-none cursor-pointer shadow-sm"
+              >
+                <option value="popular" className="bg-[var(--input-bg)]">Más Populares</option>
+                <option value="top_rated" className="bg-[var(--input-bg)]">Mejor Valoradas</option>
+                <option value="now_playing" className="bg-[var(--input-bg)]">Más Recientes</option>
+              </select>
+              <div className="absolute right-3 top-[calc(50%+0.5rem)] pointer-events-none text-[var(--text-secondary)]">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path d="M7 10l5 5 5-5H7z"/>
+                </svg>
+              </div>
+            </div>
 
-            {/* Selector de género */}
-            <select
-              value={selectedGenre}
-              onChange={(e) => setSelectedGenre(e.target.value)}
-              className="bg-gray-800 text-white rounded-lg p-2 border border-gray-700"
-            >
-              <option value="all">Todos los géneros</option>
-              {genres.map(genre => (
-                <option key={genre.id} value={genre.id}>
-                  {genre.name}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <label className="block text-[var(--text-secondary)] mb-2">
+                Género
+              </label>
+              <select
+                value={selectedGenre}
+                onChange={(e) => setSelectedGenre(e.target.value)}
+                className="w-full p-3 rounded-lg bg-[var(--input-bg)] text-[var(--text-primary)]
+                         border border-[var(--border-color)] focus:border-blue-500 focus:outline-none
+                         appearance-none cursor-pointer shadow-sm"
+              >
+                <option value="all" className="bg-[var(--input-bg)]">Todos los géneros</option>
+                {genres.map(genre => (
+                  <option key={genre.id} value={genre.id} className="bg-[var(--input-bg)]">
+                    {genre.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-[calc(50%+0.5rem)] pointer-events-none text-[var(--text-secondary)]">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path d="M7 10l5 5 5-5H7z"/>
+                </svg>
+              </div>
+            </div>
           </div>
 
           {/* Slider de valoración mejorado */}
