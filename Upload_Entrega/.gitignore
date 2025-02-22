@@ -1,0 +1,6 @@
+node_modules
+.env
+uploads/*
+recycle/*
+!uploads/.gitkeep
+!recycle/.gitkeep

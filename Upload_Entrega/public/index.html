@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload de Archivos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 shadow-lg rounded-lg w-full max-w-4xl">
+    <h1 class="text-2xl font-bold mb-4 text-center">Gestor de Archivos</h1>
+    
+    <!-- Gráfico de uso de espacio -->
+    <div class="mb-6 h-64">
+      <canvas id="spaceChart"></canvas>
+    </div>
+
+    <!-- Formulario de subida -->
+    <form id="uploadForm" class="flex flex-col gap-4" enctype="multipart/form-data">
+      <input type="file" name="file" required class="border border-gray-300 rounded-lg p-2"/>
+      <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+        Subir Archivo
+      </button>
+    </form>
+
+    <div class="grid grid-cols-2 gap-4 mt-6">
+      <!-- Archivos activos -->
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Archivos Subidos</h2>
+        <ul id="fileList" class="space-y-2"></ul>
+      </div>
+
+      <!-- Papelera -->
+      <div>
+        <div class="flex justify-between items-center mb-2">
+          <h2 class="text-xl font-semibold">Papelera</h2>
+          <button id="emptyRecycle" class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600">
+            Vaciar Papelera
+          </button>
+        </div>
+        <ul id="recycleList" class="space-y-2"></ul>
+      </div>
+    </div>
+
+    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+      <h3 class="text-lg font-semibold mb-2">Suscríbete a los reportes diarios</h3>
+      <form id="emailForm" class="flex gap-2">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Tu correo electrónico" 
+          required 
+          class="flex-1 border border-gray-300 rounded-lg p-2"
+        />
+        <button 
+          type="submit" 
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Suscribirse
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./scripts/main.js"></script>
+</body>
+</html>
