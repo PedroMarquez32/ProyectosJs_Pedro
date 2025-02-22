@@ -1,0 +1,120 @@
+/* Estilos para el slider de valoración */
+.rating-slider-container {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+}
+
+.rating-header {
+  background: rgb(30, 41, 59);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-track {
+  position: relative;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.rating-range {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+  border-radius: 4px;
+  transition: width 0.2s ease;
+}
+
+.rating-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.rating-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rating-mark:hover {
+  transform: translateY(-2px);
+}
+
+.rating-mark-label {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rating-mark-tick {
+  width: 2px;
+  height: 8px;
+  background: #475569;
+  border-radius: 1px;
+}
+
+.rating-star {
+  color: #f59e0b;
+  font-size: 1rem;
+}
+
+.rating-input {
+  position: absolute;
+  top: -5px;
+  width: 100%;
+  height: 18px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rating-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #3b82f6;
+  border-color: white;
+}
+
+.rating-input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-input::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  background: #3b82f6;
+  border-color: white;
+} 
