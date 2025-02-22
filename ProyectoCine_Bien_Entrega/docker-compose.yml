@@ -12,6 +12,9 @@ services:
       - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:3000/api
+      - VITE_API_TOKEN=${TMDB_API_KEY}
+      - VITE_BASE_URL=https://api.themoviedb.org/3
+      - VITE_BASE_IMAGE_URL=https://image.tmdb.org/t/p
     command: npm run dev -- --host
     networks:
       - app-network
@@ -28,7 +31,7 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/videoclub
       - JWT_SECRET=dev_secret
-      - TMDB_API_KEY=tu_api_key_tmdb
+      - TMDB_API_KEY=${TMDB_API_KEY}
       - NODE_ENV=development
     depends_on:
       mongodb:
