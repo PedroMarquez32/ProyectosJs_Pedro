@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Instalar todas las dependencias, incluyendo devDependencies
-RUN npm install --include=dev
+# Modificar esta línea para incluir nodemon
+RUN npm install && npm install nodemon -g
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"] 
+CMD ["npx", "nodemon", "src/app.js"] 
