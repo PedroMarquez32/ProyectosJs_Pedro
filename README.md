@@ -80,8 +80,8 @@ Este proyecto permite la subida de imágenes y el envío de notificaciones por e
 
 1. Crea un archivo `.env` en la raíz del proyecto:
    ```env
-   SENDGRID_API_KEY=SG.EbEJIZP7R4qVf-NYX4mokA.i3okozOf5EPvc2bBPB9JZGdmwhSbsHwUAuyy-"poner clave de abajo"  esta es mi clave de SendGrid cambiala por la tuya si la tienes o usa la mia pero para poder usarla pon esta 
-   clave--> "cb2zJc" al final de toda esa key no puedo ponerla junta por que si no sengrid detecta que la key esta publica y la borra
+   SG.c4vMOevPSuy6m2eSXNnHPQ.-TG-xKAOkQHewLlzYuGRqD2IIADT-"clave de abajo"  esta es mi clave de SendGrid cambiala por la tuya si la tienes o usa la mia pero para poder usarla pon esta 
+   clave--> "aiMJ7ZbykGiPBw" al final de toda esa key no puedo ponerla junta por que si no sengrid detecta que la key esta publica y la borra
    ```
 
    > ⚠️ **IMPORTANTE**: Esta clave es mia. En caso de error prueba a usar la tuya.

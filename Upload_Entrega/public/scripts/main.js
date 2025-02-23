@@ -1,10 +1,8 @@
-
 const uploadForm = document.getElementById("uploadForm");
 const fileList = document.getElementById("fileList");
 const recycleList = document.getElementById("recycleList");
 const emptyRecycleBtn = document.getElementById("emptyRecycle");
 let spaceChart;
-
 
 function initChart() {
   const ctx = document.getElementById('spaceChart').getContext('2d');
@@ -50,46 +48,37 @@ function initChart() {
             top: 10,
             bottom: 30
           }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              const value = context.raw.toFixed(2);
-              return `${context.label}: ${value} MB`;
-            }
-          }
         }
       },
-      cutout: '70%',
-      animation: {
-        animateScale: true,
-        animateRotate: true
-      }
+      cutout: '70%'
     }
   });
 }
 
-
 async function updateSpaceUsage() {
-  const response = await fetch("/uploads/space-usage");
-  if (response.ok) {
-    const data = await response.json();
-    const totalSpace = (data.uploads + data.recycle) / (1024 * 1024);
+  try {
+    const response = await fetch("/uploads/space-usage");
+    if (!response.ok) {
+      throw new Error('Error al obtener datos de espacio');
+    }
     
-   
+    const data = await response.json();
+    
+    // Actualizar datos del gráfico
     spaceChart.data.datasets[0].data = [
-      data.uploads / (1024 * 1024),
-      data.recycle / (1024 * 1024)
+      parseFloat(data.uploads.sizeInMB),
+      parseFloat(data.recycle.sizeInMB)
     ];
     
-    
+    // Actualizar título con el total
     spaceChart.options.plugins.title.text = 
-      `Uso de Espacio (Total: ${totalSpace.toFixed(2)} MB)`;
+      `Uso de Espacio (Total: ${data.total.sizeInMB} MB)`;
     
-    spaceChart.update('active');
+    spaceChart.update();
+  } catch (error) {
+    console.error('Error al actualizar el uso de espacio:', error);
   }
 }
-
 
 async function fetchFiles() {
   const response = await fetch("/uploads");
@@ -318,7 +307,7 @@ document.getElementById('emailForm').addEventListener('submit', async (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initChart();
+  updateSpaceUsage();
   fetchFiles();
   fetchRecycledFiles();
-  updateSpaceUsage();
 });

@@ -14,7 +14,6 @@ services:
       - NODE_ENV=production
       - DEBUG=express:*
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - SENDER_EMAIL=${SENDER_EMAIL}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:3000"]

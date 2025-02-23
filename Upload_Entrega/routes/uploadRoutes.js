@@ -10,6 +10,7 @@ import {
   getSpaceUsage,
   deleteFromRecycle
 } from "../controllers/uploadController.js";
+import { subscribeEmail } from '../services/emailService.js';
 
 const router = Router();
 

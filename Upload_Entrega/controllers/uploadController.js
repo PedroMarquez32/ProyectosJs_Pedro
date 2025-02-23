@@ -148,15 +148,52 @@ const emptyRecycleBin = (req, res) => {
 };
 
 const getSpaceUsage = (req, res) => {
-  const uploadsDir = path.join(process.cwd(), "uploads");
-  const recycleDir = path.join(process.cwd(), "recycle");
+  try {
+    const uploadDir = path.join(process.cwd(), "uploads");
+    const recycleDir = path.join(process.cwd(), "recycle");
+    
+    // Función para calcular el tamaño total de una carpeta
+    const getFolderSize = (directoryPath) => {
+      let totalSize = 0;
+      const files = fs.readdirSync(directoryPath);
+      
+      files.forEach(file => {
+        const filePath = path.join(directoryPath, file);
+        const stats = fs.statSync(filePath);
+        totalSize += stats.size;
+      });
+      
+      return totalSize;
+    };
 
-  const usage = {
-    uploads: getDirSize(uploadsDir),
-    recycle: getDirSize(recycleDir)
-  };
+    // Calcular tamaños
+    const uploadsSize = getFolderSize(uploadDir);
+    const recycleSize = getFolderSize(recycleDir);
+    const totalSize = uploadsSize + recycleSize;
 
-  res.json(usage);
+    // Convertir a MB para mejor legibilidad
+    const toMB = (bytes) => (bytes / (1024 * 1024)).toFixed(2);
+
+    res.json({
+      uploads: {
+        size: uploadsSize,
+        sizeInMB: toMB(uploadsSize),
+        percentage: totalSize ? ((uploadsSize / totalSize) * 100).toFixed(2) : 0
+      },
+      recycle: {
+        size: recycleSize,
+        sizeInMB: toMB(recycleSize),
+        percentage: totalSize ? ((recycleSize / totalSize) * 100).toFixed(2) : 0
+      },
+      total: {
+        size: totalSize,
+        sizeInMB: toMB(totalSize)
+      }
+    });
+  } catch (error) {
+    console.error('Error al obtener el uso de espacio:', error);
+    res.status(500).json({ error: 'Error al calcular el espacio usado' });
+  }
 };
 
 const deleteFromRecycle = (req, res) => {
