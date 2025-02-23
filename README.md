@@ -1,7 +1,5 @@
 # ProyectosJs_Pedro
 
-# Proyectos JavaScript
-
 Este repositorio contiene tres proyectos: un sistema de gestión de videoclub, una Pokédex y un proyecto de para Uploadear archivos. A continuación, se detallan las instrucciones para ejecutar cada proyecto.
 
 ## Proyecto Videoclub (proyectocine_bien_entrega)
