@@ -1,12 +1,15 @@
 const User = require('../models/User');
+const Movie = require('../models/Movie');
+const Favorite = require('../models/Favorite');
 
 exports.getFavorites = async (req, res) => {
   try {
     const userId = req.user.id;
-    const user = await User.findById(userId).populate('favorites');
+    const favorites = await Favorite.find({ user: userId })
+      .populate('movie');
     
     res.json({
-      favorites: user.favorites || []
+      favorites: favorites.map(fav => fav.movie) || []
     });
   } catch (error) {
     console.error('Error al obtener favoritos:', error);
@@ -19,11 +22,16 @@ exports.addFavorite = async (req, res) => {
     const userId = req.user.id;
     const movieId = req.body.movieId;
     
-    const user = await User.findById(userId);
-    if (!user.favorites.includes(movieId)) {
-      user.favorites.push(movieId);
-      await user.save();
+    const movie = await Movie.findOne({ tmdbId: movieId });
+    if (!movie) {
+      return res.status(404).json({ message: 'Película no encontrada' });
     }
+
+    await Favorite.findOneAndUpdate(
+      { user: userId, movie: movie._id },
+      { user: userId, movie: movie._id },
+      { upsert: true, new: true }
+    );
     
     res.json({ message: 'Película añadida a favoritos' });
   } catch (error) {
@@ -37,9 +45,12 @@ exports.removeFavorite = async (req, res) => {
     const userId = req.user.id;
     const movieId = req.params.movieId;
     
-    const user = await User.findById(userId);
-    user.favorites = user.favorites.filter(id => id.toString() !== movieId);
-    await user.save();
+    const movie = await Movie.findOne({ tmdbId: movieId });
+    if (!movie) {
+      return res.status(404).json({ message: 'Película no encontrada' });
+    }
+
+    await Favorite.findOneAndDelete({ user: userId, movie: movie._id });
     
     res.json({ message: 'Película eliminada de favoritos' });
   } catch (error) {

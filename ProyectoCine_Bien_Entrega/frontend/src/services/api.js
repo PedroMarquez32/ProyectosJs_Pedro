@@ -1,21 +1,38 @@
 const API_URL = 'http://localhost:3000/api';
 
 const fetchWithCredentials = async (endpoint, options = {}) => {
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
+  const token = localStorage.getItem('token');
+  
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : '',
+  };
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Error en la petición');
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      credentials: 'include',
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        // Si hay error de autenticación, redirigir al login
+        window.location.href = '/login';
+        throw new Error('Sesión expirada');
+      }
+      const error = await response.json();
+      throw new Error(error.message || 'Error en la petición');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Error en fetchWithCredentials:', error);
+    throw error;
   }
-
-  return response.json();
 };
 
 
@@ -49,11 +66,18 @@ export const movieService = {
   getMovieDetails: (id) =>
     fetchWithCredentials(`/movies/${id}`),
 
-  toggleFavorite: (movieId) =>
-    fetchWithCredentials('/user/favorites', {
-      method: 'POST',
-      body: JSON.stringify({ movieId }),
-    }),
+  toggleFavorite: async (movieId) => {
+    try {
+      const response = await fetchWithCredentials('/user/favorites', {
+        method: 'POST',
+        body: JSON.stringify({ movieId: Number(movieId) }),
+      });
+      return response;
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+      throw error;
+    }
+  },
 
   addReview: (movieId, review) =>
     fetchWithCredentials('/user/reviews', {
@@ -64,8 +88,15 @@ export const movieService = {
   getMovieReviews: (movieId) =>
     fetchWithCredentials(`/movies/${movieId}/reviews`),
 
-  getUserFavorites: () =>
-    fetchWithCredentials('/user/favorites'),
+  getUserFavorites: async () => {
+    try {
+      const response = await fetchWithCredentials('/user/favorites');
+      return response || [];
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+      return [];
+    }
+  },
 
   getUserReviews: () =>
     fetchWithCredentials('/user/reviews'),

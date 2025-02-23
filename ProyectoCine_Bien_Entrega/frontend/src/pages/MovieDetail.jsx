@@ -26,13 +26,13 @@ const MovieDetail = () => {
 
   useEffect(() => {
     const checkIfFavorite = async () => {
-      if (user) {
-        try {
-          const userData = await movieService.getUserFavorites();
-          setIsFavorite(userData.some(fav => fav.tmdbId === Number(id)));
-        } catch (error) {
-          console.error('Error al verificar favoritos:', error);
-        }
+      if (!user) return;
+      
+      try {
+        const favorites = await movieService.getUserFavorites();
+        setIsFavorite(favorites.some(fav => fav.tmdbId === Number(id)));
+      } catch (error) {
+        console.error('Error al verificar favoritos:', error);
       }
     };
 
@@ -50,11 +50,15 @@ const MovieDetail = () => {
   }, [id, user]);
 
   const handleToggleFavorite = async () => {
-    if (!user) return;
+    if (!user) {
+      // Redirigir al login si no hay usuario
+      window.location.href = '/login';
+      return;
+    }
     
     try {
-      await movieService.toggleFavorite(id);
-      setIsFavorite(!isFavorite);
+      const response = await movieService.toggleFavorite(id);
+      setIsFavorite(response.isFavorite);
     } catch (error) {
       console.error('Error al actualizar favoritos:', error);
     }

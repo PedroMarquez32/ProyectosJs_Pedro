@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Movie = require('../models/Movie');
 const Review = require('../models/Review');
+const Favorite = require('../models/Favorite');
 const fetch = require('node-fetch');
 
 exports.getUserProfile = async (req, res) => {
@@ -16,9 +17,26 @@ exports.getUserProfile = async (req, res) => {
 
 exports.getUserFavorites = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate('favorites');
-    res.json(user.favorites);
+    if (!req.user) {
+      return res.status(401).json({ message: 'No autorizado' });
+    }
+
+    const favorites = await Favorite.find({ user: req.user.id })
+      .populate('movie');
+    
+    const formattedFavorites = favorites.map(fav => ({
+      tmdbId: fav.movie.tmdbId,
+      title: fav.movie.title,
+      posterPath: fav.movie.posterPath,
+      backdropPath: fav.movie.backdropPath,
+      overview: fav.movie.overview,
+      releaseDate: fav.movie.releaseDate,
+      voteAverage: fav.movie.voteAverage
+    }));
+
+    res.json(formattedFavorites);
   } catch (error) {
+    console.error('Error al obtener favoritos:', error);
     res.status(500).json({ message: 'Error al obtener favoritos' });
   }
 };
@@ -36,27 +54,47 @@ exports.getUserReviews = async (req, res) => {
 
 exports.toggleFavorite = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'No autorizado' });
+    }
+
     const { movieId } = req.body;
     const userId = req.user.id;
 
-    const movie = await Movie.findOne({ tmdbId: movieId });
+    let movie = await Movie.findOne({ tmdbId: movieId });
+    
     if (!movie) {
-      return res.status(404).json({ message: 'Película no encontrada' });
+      // Si la película no existe en nuestra base de datos, obtenerla de TMDB
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}&language=es-ES`
+      );
+      const movieData = await response.json();
+      
+      movie = await Movie.create({
+        tmdbId: movieId,
+        title: movieData.title,
+        posterPath: movieData.poster_path,
+        backdropPath: movieData.backdrop_path,
+        overview: movieData.overview,
+        releaseDate: movieData.release_date,
+        voteAverage: movieData.vote_average
+      });
     }
 
-    const user = await User.findById(userId);
-    const movieIndex = user.favorites.indexOf(movie._id);
+    const existingFavorite = await Favorite.findOne({ 
+      user: userId, 
+      movie: movie._id 
+    });
 
-    if (movieIndex === -1) {
-      user.favorites.push(movie._id);
-      await user.save();
-      res.json({ message: 'Película añadida a favoritos' });
+    if (existingFavorite) {
+      await Favorite.findByIdAndDelete(existingFavorite._id);
+      res.json({ message: 'Película eliminada de favoritos', isFavorite: false });
     } else {
-      user.favorites.splice(movieIndex, 1);
-      await user.save();
-      res.json({ message: 'Película eliminada de favoritos' });
+      await Favorite.create({ user: userId, movie: movie._id });
+      res.json({ message: 'Película añadida a favoritos', isFavorite: true });
     }
   } catch (error) {
+    console.error('Error al actualizar favoritos:', error);
     res.status(500).json({ message: 'Error al actualizar favoritos' });
   }
 };

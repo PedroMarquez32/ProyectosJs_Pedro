@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { movieService } from '../services/api';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onFavoriteToggle }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const { user } = useAuth();
@@ -13,8 +13,8 @@ const MovieCard = ({ movie }) => {
     const checkIfFavorite = async () => {
       if (user) {
         try {
-          const userData = await movieService.getUserFavorites();
-          setIsFavorite(userData.some(fav => fav.tmdbId === movie.id));
+          const favorites = await movieService.getUserFavorites();
+          setIsFavorite(favorites.some(fav => fav.tmdbId === movie.id));
         } catch (error) {
           console.error('Error al verificar favoritos:', error);
         }
@@ -33,8 +33,11 @@ const MovieCard = ({ movie }) => {
     if (!user) return;
 
     try {
-      await movieService.toggleFavorite(movie.id);
-      setIsFavorite(!isFavorite);
+      const response = await movieService.toggleFavorite(movie.id);
+      setIsFavorite(response.isFavorite);
+      if (onFavoriteToggle) {
+        onFavoriteToggle(movie.id);
+      }
     } catch (error) {
       console.error('Error al actualizar favoritos:', error);
     }

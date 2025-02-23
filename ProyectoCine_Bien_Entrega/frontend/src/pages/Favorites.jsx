@@ -39,8 +39,10 @@ const Favorites = () => {
 
   const handleToggleFavorite = async (movieId) => {
     try {
-      await movieService.toggleFavorite(movieId);
-      setFavorites(prev => prev.filter(movie => movie.id !== movieId));
+      const response = await movieService.toggleFavorite(movieId);
+      if (response.isFavorite === false) {
+        setFavorites(prev => prev.filter(movie => movie.id !== movieId));
+      }
     } catch (err) {
       console.error('Error toggling favorite:', err);
       setError('Error al actualizar favoritos');
@@ -103,8 +105,7 @@ const Favorites = () => {
             <MovieCard
               key={movie.id}
               movie={movie}
-              isFavorite={true}
-              onFavoriteToggle={() => handleToggleFavorite(movie.id)}
+              onFavoriteToggle={handleToggleFavorite}
               imageBaseUrl="https://image.tmdb.org/t/p/w500"
             />
           ))}
