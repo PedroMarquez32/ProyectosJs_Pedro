@@ -27,7 +27,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "movie/:id",
-        element: <MovieDetail />,
+        element: (
+          <ProtectedRoute>
+            <MovieDetail />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "login",
